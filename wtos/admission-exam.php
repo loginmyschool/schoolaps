@@ -13,7 +13,15 @@ $ajaxFilePath = 'admission-exam-ajax.php';
 $loadingImage = $site['url-wtos'] . 'images/loadingwt.gif';
 ?>
 <div class="uk-padding uk-padding-small">
-    <button onclick="openForm()">New Exam</button>
+    <div class="uk-flex uk-margin">
+        <div class="uk-flex-1">
+            <h3>Admission Exams</h3>
+        </div>
+        <div>
+            <button class="uk-button uk-button-small uk-button-primary" onclick="openForm()">New Exam</button>
+        </div>
+    </div>
+
     <div id="exam-lists" class="uk-card uk-card-small uk-card-default uk-card-body">
 
     </div>
@@ -65,7 +73,7 @@ $loadingImage = $site['url-wtos'] . 'images/loadingwt.gif';
         }, url, fd);
     }
 
-    function saveExam(event){
+    function saveExam(event) {
         const fd = new FormData(event.target);
         fd.append('wt_admission_exams_save', "OK");
         const url = '<? echo $ajaxFilePath ?>?wt_admission_exams_save=OK&';

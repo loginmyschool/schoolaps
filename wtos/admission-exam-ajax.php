@@ -30,7 +30,7 @@ if ($os->get('wt_admission_exams_list') == 'OK' && $os->post("wt_admission_exams
                     </td>
                     <td><?= $exam["description"] ?></td>
                     <td><?= $exam["session"] ?></td>
-                    <td><?= $exam["class"] ?></td>
+                    <td><?= $os->classList[$exam["class"]] ?></td>
                     <td><?= $exam["total_marks"] ?></td>
                     <td><?= $exam["cutoff_marks"] ?></td>
                     <td><?= $exam["status"] ?></td>
