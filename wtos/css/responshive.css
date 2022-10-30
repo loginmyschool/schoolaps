@@ -1,0 +1,26 @@
+@media only screen and (max-width: 1000px) {
+    body{
+        grid-template-columns:100%;
+        grid-template-rows: 50px calc(100% - 50px);
+    }
+    header{
+        grid-column: 1;
+        grid-template-columns: 50px repeat(auto-fit, minmax(0,auto));
+        grid-template-rows: 50px;
+        position: sticky;
+        top: 0;
+    }
+    .container{
+        grid-column: 1;
+    }
+    header .nav-button{
+        display: inherit !important;
+    }
+    header div.logo{
+        padding-left: 0 !important;
+    }
+
+    header div.logo p{
+        padding-left: 0 !important;
+    }
+}

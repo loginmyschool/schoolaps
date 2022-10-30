@@ -1,0 +1,43 @@
+{
+	"name": "ommu/php-excel-reader",
+	"description": "PHP Excel Reader from Ommu Platform",
+	"keywords": [
+		"extension",
+		"php excel reader",
+		"php",
+		"excel",
+		"reader",
+		"xls",
+		"ommu",
+		"ommu-platform"
+	],
+	"homepage": "https://github.com/ommu/ext-php-excel-reader",
+	"type": "ommu-extension",
+	"license": "Apache-2.0",
+	"support": {
+		"issues": "https://github.com/ommu/ext-php-excel-reader/issues",
+		"wiki": "https://github.com/ommu/ext-php-excel-reader/wiki",
+		"source": "https://github.com/ommu/ext-php-excel-reader"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ommu/ext-php-excel-reader.git"
+	},
+	"authors": [
+		{
+			"name": "jerry2801",
+			"email": "jerry2801@gmail.com",
+			"role": "Creator"
+		},
+		{
+			"name": "Putra Sudaryanto",
+			"email": "putra@ommu.co",
+			"homepage": "https://ommu.co",
+			"role": "Modifier"
+		}
+	],
+	"require": {
+		"php": ">=5.3.2",
+		"oomphinc/composer-installers-extender": "^1.0"
+	}
+}

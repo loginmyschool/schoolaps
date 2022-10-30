@@ -1,0 +1,155 @@
+@import "common.css";
+html, body{
+
+}
+header{
+    /*background-color: red;*/
+}
+
+header .top-bar{
+    border-bottom: 1px solid #eeeeee;
+    background-color: var(--color-primary);
+}
+header .navigation{
+    background-color: var(--color-primary);
+}
+
+header .header-container{
+    display:grid;
+    grid-template-columns: 60px auto 0 max-content;
+}
+header .header-container > div{
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+header .header-container > div:nth-last-child(1), header .header-container > div:nth-last-child(2){
+    /*justify-content: flex-end;*/
+}
+header .logo a{
+    text-decoration: none;
+    color: white;
+    display: grid;
+    grid-template-columns:max-content  auto;
+    grid-template-rows: auto;
+    grid-gap: 10px;
+}
+header .logo img{
+    height: 60px;
+    width: auto;
+}
+header .logo a .caption{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+header .logo p, header .logo  span.title{
+    line-height: 20px;
+    font-size: 15px;
+    font-weight: 600;
+    color: white;
+    white-space: nowrap;
+    font-family: 'Playfair Display', serif;
+}
+header .logo p, header .logo  span.subtitle{
+    line-height: 10px;
+    vertical-align: bottom;
+    font-size: 9px;
+    white-space: nowrap;
+
+}
+@media (min-width: 350px) {
+    header .logo p, header .logo span.title{
+        line-height: 25px;
+        font-size: 20px;
+
+    }
+    header .logo p, header .logo span.subtitle{
+        line-height: 14px;
+        font-size: 11px;
+    }
+}
+@media (min-width: 640px) {
+    header .logo a{
+        grid-template-columns: max-content auto;
+    }
+
+    header .logo p, header .logo span.title{
+        line-height: 30px;
+        font-size: 25px;
+
+    }
+    header .logo p, header .logo span.subtitle{
+        line-height: 16px;
+        font-size: 13px;
+        display: inherit;
+    }
+}
+@media (min-width: 960px) {
+    header .header-container{
+        display:grid;
+        grid-template-columns: min-content auto max-content;
+    }
+    header .header-container > div:nth-last-child(1), header .header-container > div:nth-last-child(2){
+        justify-content: flex-end;
+    }
+}
+
+
+
+/*na
+---------------
+Navigation
+---------------
+ */
+
+header .uk-navbar-nav > li > a{
+    text-transform: inherit;
+    min-height: 30px;
+    display: flex;
+    align-items: center;
+    color: white;
+    white-space: nowrap;
+
+}
+header .uk-navbar-nav > li.uk-active > a{
+    color: var(--color-secondary-dark);
+}
+header .uk-navbar-nav > li > a > i{
+    margin-left: 5px;
+    font-size: 11px;
+}
+@media (min-width: 640px) {
+    header .uk-navbar-nav > li:hover > a{
+        opacity: 0.9;
+    }
+}
+.uk-navbar-nav > li > a.uk-open{
+    color: white;
+}
+/*
+#offcanvas-nav .uk-offcanvas-bar{
+    background-color: white !important;
+}
+
+#offcanvas-nav .uk-nav-default > li  a{
+    color: #000000 ;
+}
+
+#offcanvas-nav .uk-nav-default > li  a.active{
+    color:var(--color-primary)
+}
+*/
+#wt-page-header{
+    background-color: white;
+}
+
+
+
+
+
+

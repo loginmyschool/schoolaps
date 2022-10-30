@@ -1,0 +1,29 @@
+{
+  "name": "mercurysolutions/mathml",
+  "description": "A PHP MathML library for parsing and calculating Content MathML",
+  "keywords": ["MathML"],
+  "authors": [
+    {
+      "name": "Renaud Closset",
+      "email": "renaud+packagist@mercurysolutions.be"
+    }
+  ],
+  "license": "Apache-2.0",
+  "require": {
+    "php": ">=7.1",
+    "ext-simplexml": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^7"
+  },
+  "autoload": {
+    "psr-4": {
+      "MercurySolutions\\MathML\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "MercurySolutions\\MathML\\Tests\\": "tests/"
+    }
+  }
+}

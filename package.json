@@ -1,0 +1,23 @@
+{
+  "name": "missionikhlas",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/webtrackers4u/missionikhlas.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/webtrackers4u/missionikhlas/issues"
+  },
+  "homepage": "https://github.com/webtrackers4u/missionikhlas#readme",
+  "dependencies": {
+    "jquery-datetimepicker": "^2.5.21",
+    "jquery-ui-dist": "^1.12.1"
+  }
+}

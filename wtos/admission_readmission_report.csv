@@ -1,0 +1,82 @@
+SL,Id,Name,"Date Of Birth",Gender,Class,Section,"Father Name"
+1,2,"Naimur rahaman",2021-09-21,,5,,"Mizanur rahaman"
+2,5,"Xeon Mathew",1998-02-27,,5,,AKZ
+3,6,"Xeon Mathew",1998-02-27,,5,,AKZ
+4,7,"Xeon Mathew",2021-10-02,,5,,AKZ
+5,8,"Tarak Paul",2021-10-26,,5,,"Balai paul"
+6,9,z,2021-10-26,,5,,m
+7,12,test,2021-10-28,,5,,1
+8,15,"LALAN MONDAL",1982-02-15,,5,,"ANEJ MONDAL;"
+9,2,"Naimur rahaman",2021-09-21,,6,,"Mizanur rahaman"
+10,15,"LALAN MONDAL",1982-02-15,,6,,"ANEJ MONDAL;"
+11,8,"Tarak Paul",2021-10-26,,8,,"Balai paul"
+12,2,"Naimur rahaman",2021-09-21,,8,,"Mizanur rahaman"
+13,8,"Tarak Paul",2021-10-26,,9,,"Balai paul"
+14,214,"Tarik Khan",2005-09-01,,10,,"Tajimuddin khan"
+15,215,"Eyasmaun khatun",2006-05-06,,10,,"Imamul malitya"
+16,218,"Ramiz Sk",1998-08-26,,10,,"Late Babar sk"
+17,220,"Abdul jabbar sk",2005-02-12,,10,,Akali
+18,236,"GLOBAL EDUCATION",1996-12-27,,10,,"GLOBAL EDUCATION"
+19,238,"Sohel molla",1990-12-25,,10,,....
+20,240,"Bappi hoque",2021-12-04,,10,,Intajul
+21,243,"Md Miraj sk",2006-07-16,,10,,"Vasan sk"
+22,245,Anik,2003-12-25,,10,,"Alauddin sarkar"
+23,246,"rigel molla",2006-01-02,,10,,"azad molla"
+24,248,"Asik mondal",2006-12-26,,10,,"Modhu mondal"
+25,249,Mehebub,2004-04-11,,10,,Alam
+26,256,"Mehebub mondal",2006-12-12,,10,,"Mohammad Ali mondal"
+27,8,"Tarak Paul",2021-10-26,,10,,"Balai paul"
+28,22,"Monirul Sarkar",1996-12-27,,10,,"Golam Jakaria Sarkar"
+29,15,"LALAN MONDAL",1982-02-15,,10,,"ANEJ MONDAL;"
+30,25,"Nafish Ahmed",1998-02-27,,10,,"Abul Kalam Azad"
+31,26,Lalan,1982-02-15,,10,,Anej
+32,27,"MUKTARUL HOSSAIN",1996-02-14,,10,,"ABU JAFAR MONDAL"
+33,8,"Tarak Paul",2021-10-26,,10,,"Balai paul"
+34,28,"Ankita Sen",2021-12-05,,10,,"Ashim sen"
+35,36,Hilal,2003-12-07,,10,,"Ali sk"
+36,115,"Sakil islam",2006-12-05,,10,,"Samiul islam"
+37,226,"Bristy khatun",2005-10-16,,12,,"Sajibul Ansary"
+38,227,"Griffith Barnes",1997-10-27,,12,,"Simon Reeves"
+39,228,"Mahamuda khatun",2004-07-14,,12,,"Hematullah Biswas"
+40,231,"Abdul Sk",2021-12-24,,12,,"Samsul Sk"
+41,237,"Humayun Biswas",1991-10-15,,12,,"Samsul alam"
+42,244,"ALAUDDIN sarkar",2002-12-25,,12,,Mmmm
+43,16,"ROBIUL AWAL",1995-11-14,Male,12,,"MOTIUR RAHAMAN"
+44,8,"Tarak Paul",2021-10-26,,12,,"Balai paul"
+45,15,"LALAN MONDAL",1982-02-15,,12,,"ANEJ MONDAL;"
+46,22,"Monirul Sarkar",1996-12-27,,12,,"Golam Jakaria Sarkar"
+47,34,"Nasrin Banu",1999-05-02,,12,,"Niyarul Molla"
+48,37,"Eman Sarkar",2002-09-09,,12,,"Bapi Sarkar"
+49,97,"Dyan kha",2010-12-10,,12,,"Cry and"
+50,217,"Shila Mondal",2003-10-27,,13,,"Shila Mondal"
+51,225,"Jaj milton",2003-06-17,,13,,"Anikul sk"
+52,239,"Sirajul islam",2004-09-07,,13,,"Mirajul sk "
+53,241,"Yusuf biswas",2004-11-15,,13,,"Abdul khalek biswas"
+54,242,"Jahid hasan biswas",2003-09-14,,13,,"Lalon biswas"
+55,250,"Aminul Islam",1984-12-27,,13,,"Abu Bakkar"
+56,252,Priyanka,2004-07-14,,13,,"Hafijul mondal"
+57,253,"Sabnam kaberi",2004-10-27,,13,,"Kabil Ansari"
+58,254,"Sahana khatun",2004-10-18,,13,,"Sariyat mondal"
+59,255,"Sahana khatun",2004-10-18,,13,,"Sariyat mondal"
+60,15,"LALAN MONDAL",1982-02-15,,13,,"ANEJ MONDAL;"
+61,22,"Monirul Sarkar",1996-12-27,,13,,"Golam Jakaria Sarkar"
+62,29,Счастливчик,2004-05-08,,13,,"Рафикуль Миа"
+63,35,Ll,2005-12-06,,13,,Jj
+64,38,"Farhad Ikbal",2013-10-03,,13,,ᶦᶰᵈ᭄✿Farhad࿐
+65,128,Rahul,2002-02-01,,13,,Aktar
+66,169,"Saghar Malithya",2004-12-23,,13,,"Siddik malithya"
+67,258,"Test user",2000-01-04,,17,,"test father"
+68,13,"Nafish Ahmed",1998-02-27,,17,,AKZ
+69,14,Zim,1982-01-29,,17,,"H Biswas"
+70,15,"LALAN MONDAL",1982-02-15,,17,,"ANEJ MONDAL;"
+71,17,Dilwar,2000-09-21,,17,,Hossain
+72,20,"Dr. Nafish Ahmed",1998-02-27,,17,,AKZ
+73,8,"Tarak Paul",2021-10-26,,17,,"Balai paul"
+74,15,"LALAN MONDAL",1982-02-15,,17,,"ANEJ MONDAL;"
+75,22,"Monirul Sarkar",1996-12-27,,17,,"Golam Jakaria Sarkar"
+76,24,"Sohel Molla",1992-06-04,,17,,"Hasn't molla"
+77,25,"Nafish Ahmed",1998-02-27,,17,,"Abul Kalam Azad"
+78,17,Dilwar,2000-09-21,,17,,Hossain
+79,30,"Sakibul hasan",2021-12-17,,17,,"Sakib sk"
+80,31,Aslam,2001-04-15,,17,,Shail
+81,32,"Kart flip",2002-12-18,,17,,Amazon
