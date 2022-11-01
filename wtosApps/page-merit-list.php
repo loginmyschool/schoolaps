@@ -3,78 +3,121 @@ include "_partials/wt_header.php";
 include "_partials/wt_precontent.php";
 global $os, $site, $session_selected, $bridge, $pageVar;
 ?>
-<div style="height: 200px;"></div>
+
 <? include "_partials/wt_postcontent.php"; ?>
 <?
 
-$sql = <<<EOT
-SELECT ff.name, ff.formfillup_id,  GROUP_CONCAT(JSON_OBJECT(
-    'priority', aed.priority,
-    'subject', aed.subject_name,
-    'obtain_marks', aerd.marks_obtain
-  )) as details, SUM(aerd.marks_obtain) as total_marks_obtain FROM admission_exam_result_detail aerd   
-INNER JOIN formfillup ff ON ff.formfillup_id=aerd.formfillup_id 
-INNER JOIN admission_exam_detail aed ON aerd.admission_exam_detail_id = aed.admission_exam_detail_id 
-GROUP BY ff.formfillup_id 
-ORDER BY total_marks_obtain DESC 
-EOT;
-$results = $os->mq($sql)->fetchAll(\PDO::FETCH_ASSOC);
-$results = array_map(function ($result) {
-    $details = json_decode("[" . $result["details"] . "]");
-    usort($details, function ($a, $b) {
-        return $a->priority - $b->priority;
-    });
-    $result["details"] = $details;
-    return $result;
-}, $results);
-
-usort($results, function ($ar, $br) {
-    if ($ar["total_marks_obtain"] == $br["total_marks_obtain"]) {
-        $ac = 0;
-        $bc = 0;
-        foreach ($ar["details"] as $i => $ard) {
-            $brd = $ar["details"][$i];
-            if ($ard->obtain_marks > $brd->obtain_marks) {
-                $ac++;
-            } else {
-                $bc++;
-            }
-        }
-        return $ac - $bc;
-    }
-    $ar["total_marks_obtain"] - $br["total_marks_obtain"];
-});
 ?>
-<div class="uk-container">
-    <table class="table">
-        <? foreach ($results as $index => $result) { ?>
-            <tr>
-                <td><?= $index + 1 ?></td>
-                <td><?= $result["name"] ?></td>
-                <td><?= $result["total_marks_obtain"] ?></td>
-                <td>
-                    <table>
-                        <? foreach ($result["details"] as $detail) { ?>
-                            <tr>
-                                <td style="font-size: 10px; padding-right: 10px"><?= $detail->subject ?></td>
-                                <td style="font-size: 10px;"><?= $detail->obtain_marks ?></td>
-                            </tr>
-                        <? } ?>
-                    </table>
-                </td>
+<div class="uk-container uk-margin uk-container-small">
+    <form method="post" class="uk-grid-small" uk-grid>
+        <div>
+            <input class="uk-input uk-form-small" placeholder="Form Number" name="form_no" value="<?= $os->post('form_no'); ?>" />
+        </div>
+        <div>
+            <input class="uk-input uk-form-small" type="date" placeholder="Date of birth" name="dob" value="<?= $os->post("dob") ?>" />
+        </div>
+        <div>
+            <button class="uk-button uk-button-small uk-button-primary" type="submit">Search</button>
+        </div>
+    </form>
+    <div style="min-height: 200px" class="uk-margin">
+        <? if ($os->post("form_no") != "") {
+            $form_no = $os->post("form_no");
+            $dob = $os->post("dob");
+            $sql = <<<EOT
+                SELECT * FROM admission_exam_result aed
+                INNER JOIN admission_exam ae ON ae.admission_exam_id=aed.admission_exam_id
+                INNER JOIN formfillup ff ON ff.formfillup_id= aed.formfillup_id AND ff.form_no='$form_no' AND DATE(ff.dob)='$dob'
+                EOT;
+            $exam_result = $os->mfa($os->mq($sql));
+            if ($exam_result) {
+                $exam_result_details = $os->mq("SELECT * FROM admission_exam_result_detail aerd INNER JOIN admission_exam_detail aed ON aed.admission_exam_detail_id=aerd.admission_exam_detail_id WHERE aerd.admission_exam_result_id='" . $exam_result["admission_exam_result_id"] . "'");
 
-            </tr>
-        <?
-        }
+
         ?>
-    </table>
+                <table class="uk-width-1-1 uk-margin uk-table-striped">
+                    <tr>
+                        <th>Description</th>
+                        <td> <?= $exam_result["description"]; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Session</th>
+                        <td> <?= $exam_result["session"]; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Class</th>
+                        <td> <?= $os->classList[$exam_result["class"]]; ?></td>
+                    </tr>
+
+                    <tr>
+                        <th>Total Marks</th>
+                        <td> <?= $exam_result["total_marks"]; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Total Obtain</th>
+                        <td> <?= $exam_result["total_marks_obtain"]; ?></td>
+                    </tr>
+                    <tr>
+                        <th>FM</th>
+                        <td> <?= $exam_result["total_marks"]; ?></td>
+                    </tr>
+
+                    <tr>
+                        <th>Position</th>
+                        <td> <?= $exam_result["position"]; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Status</th>
+                        <td>
+                            <?
+                            if ($exam_result["total_marks_obtain"] >= $exam_result["cutoff_marks"] && $exam_result["position"] <= $exam_result["available_slots"]) {
+                                echo "Passed";
+                            } else {
+                                echo "Failed";
+                            }
+                            ?>
+                        </td>
+                    </tr>
+                </table>
+
+                <table class="uk-width-1-1 uk-margin uk-table-striped">
+                    <tr>
+                        <th>Subject</th>
+                        <th>Obtain</th>
+                        <th>FM</th>
+                    </tr>
+                    <? while ($exam_result_detail = $os->mfa($exam_result_details)) { ?>
+                        <tr>
+                            <td><?= $exam_result_detail["subject_name"] ?></td>
+                            <td width="1%"><?= $exam_result_detail["marks_obtain"] ?></td>
+                            <td width="1%"><?= $exam_result_detail["marks"] ?></td>
+                        </tr>
+                    <? } ?>
+                </table>
+
+
+            <?
+            } else {
+            ?>
+                <p>Form not found.</p>
+            <?
+            }
+        } else { ?>
+            <p>Please enter form number.</p>
+
+        <? } ?>
+    </div>
 </div>
+
 <style>
-    .table {
-        width: 100%;
-        border-collapse: collapse
+    table {
+        border-collapse: 'collapse';
+    }
+
+    table td,
+    table th {
+        border: 1px solid #e5e5e5;
+        padding: 4px 5px;
     }
 </style>
-<script>
-</script>
 <? include "_partials/wt_footer.php"; ?>
