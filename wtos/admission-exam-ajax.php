@@ -48,7 +48,7 @@ if ($os->get('wt_admission_exams_list') == 'OK' && $os->post("wt_admission_exams
 if ($os->get('wt_admission_exams_form') == 'OK' && $os->post("wt_admission_exams_form") === "OK") {
     $admission_exam_id = $os->post("admission_exam_id") ?? 0;
     $admission_exam = $os->mfa($os->mq("SELECT * FROM admission_exam WHERE admission_exam_id='$admission_exam_id'"));
-    $admission_exam_details = $os->mq("SELECT * FROM admission_exam_detail WHERE admission_exam_id='$admission_exam_id'")->fetchAll(\PDO::FETCH_ASSOC);
+    $admission_exam_details = $os->mq("SELECT * FROM admission_exam_detail WHERE admission_exam_id='$admission_exam_id' ORDER BY priority")->fetchAll(\PDO::FETCH_ASSOC);
 ?>
     <form onsubmit="event.preventDefault(); saveExam(event)">
         <input type="hidden" name="admission_exam_id" value="<?= $admission_exam_id ?>" />
@@ -108,6 +108,15 @@ if ($os->get('wt_admission_exams_form') == 'OK' && $os->post("wt_admission_exams
 
             <div class="uk-width-1-3">
                 <div>
+                    <label class="uk-form-label">Available Slots</label>
+                    <div class="uk-form-controls">
+                        <input class="uk-input" type="number" required name="available_slots" value="<?= $os->val($admission_exam, "available_slots") ?>" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="uk-width-1-3">
+                <div>
                     <label class="uk-form-label">Status</label>
                     <div class="uk-form-controls">
                         <select class="uk-select" name="status">
@@ -125,6 +134,7 @@ if ($os->get('wt_admission_exams_form') == 'OK' && $os->post("wt_admission_exams
             <table class="uk-table uk-table-small congested-table">
                 <tr>
                     <td class="uk-padding-remove-left">Name</td>
+                    <td class="uk-padding-remove-left">Priority</td>
                     <td class="uk-padding-remove-right">Marks</td>
                 </tr>
 
@@ -135,6 +145,9 @@ if ($os->get('wt_admission_exams_form') == 'OK' && $os->post("wt_admission_exams
                         <td class="uk-padding-remove-left">
                             <input class="uk-input uk-form-small" type="hidden" name="subjects[<?= $x ?>][admission_exam_detail_id]" value="<?= $os->val($admission_exam_detail, "admission_exam_detail_id") ?>" />
                             <input class="uk-input uk-form-small" type="text" name="subjects[<?= $x ?>][subject_name]" value="<?= $os->val($admission_exam_detail, "subject_name") ?>" />
+                        </td>
+                        <td class="uk-padding-remove-right" width="1%">
+                            <input class="uk-input uk-form-small" type="number" name="subjects[<?= $x ?>][priority]" style="width: 100px" value="<?= $os->val($admission_exam_detail, "priority") ?>" />
                         </td>
                         <td class="uk-padding-remove-right" width="1%">
                             <input class="uk-input uk-form-small" type="number" name="subjects[<?= $x ?>][marks]" style="width: 100px" value="<?= $os->val($admission_exam_detail, "marks") ?>" />
@@ -167,7 +180,8 @@ if ($os->get('wt_admission_exams_save') == 'OK' && $os->post("wt_admission_exams
         "session" => $os->post("session"),
         "class" => $os->post("class"),
         "total_marks" => $os->post("total_marks"),
-        "cutoff_marks" => $os->post("cutoff_marks")
+        "cutoff_marks" => $os->post("cutoff_marks"),
+        "available_slots" => $os->post("available_slots")
     ];
 
     $admission_exam_id = $os->save("admission_exam", $dataToSave, "admission_exam_id", $admission_exam_id);
@@ -176,6 +190,7 @@ if ($os->get('wt_admission_exams_save') == 'OK' && $os->post("wt_admission_exams
         $admission_exam_detail_id = $os->val($subject, "admission_exam_detail_id");
         $subject_name = $os->val($subject, "subject_name");
         $marks = $os->val($subject, "marks");
+        $priority = $os->val($subject, "priority");
 
         if($subject_name == "" || $marks == "") {
             continue;
@@ -184,7 +199,8 @@ if ($os->get('wt_admission_exams_save') == 'OK' && $os->post("wt_admission_exams
         $dataToSave = [
             "subject_name" => $subject_name,
             "marks" => $marks,
-            "admission_exam_id" => $admission_exam_id
+            "admission_exam_id" => $admission_exam_id,
+            "priority" => $priority,
         ];
         $admission_exam_detail_id = $os->save("admission_exam_detail", $dataToSave, "admission_exam_detail_id", $admission_exam_detail_id);
     }
