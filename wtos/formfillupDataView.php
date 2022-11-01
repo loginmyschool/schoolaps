@@ -107,6 +107,10 @@ while($record2=$os->mfa( $rsResults2)){
 									Admission sought for class:<span style="color:#FF0000">*</span><select name="class_id" id="class_id" class="uk-select form-field"><option value="">Select Class</option>	<? 
 									$os->onlyOption($os->classList);	?></select>
 								</div>
+								
+								
+								
+								
 
 								<div class="uk-margin-small">Father name :<span style="color:#FF0000">*</span><input value="" type="text" name="father_name" id="father_name" class="uk-input form-field "/> </div>
 								<div class="uk-margin-small">Father Mobile : <span style="color:#FF0000">*</span><input value="" type="text" name="father_mobile" id="father_mobile" class="uk-input form-field "/> </div>
@@ -120,6 +124,14 @@ while($record2=$os->mfa( $rsResults2)){
 								</div>
 								<div class="uk-margin-small">
 									Application Date:<input value="" type="date" name="application_date" id="application_date" class="wtDateClass uk-input form-field"/>
+								</div>
+								
+								<div class="uk-margin-small">
+									Academic Year:
+									<select name="academic_year" id="academic_year" class="uk-select form-field ">
+										<option value="">Select Year</option>
+										<? $os->onlyOption($os->asession,'2023');	?>
+									</select>	
 								</div>
 								
 								
@@ -162,13 +174,7 @@ while($record2=$os->mfa( $rsResults2)){
 								</div>
 								
 								
-								<div class="uk-margin-small">
-									Academic Year:
-									<select name="academic_year" id="academic_year" class="uk-select form-field ">
-										<option value="">Select Year</option>
-										<? $os->onlyOption($os->asession);	?>
-									</select>	
-								</div>
+								
 
 								
 								<div class="uk-margin-small">
