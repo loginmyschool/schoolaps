@@ -34,6 +34,7 @@ if ($os->get('wt_admission_exams_list') == 'OK' && $os->post("wt_admission_exams
                     <td><?= $exam["total_marks"] ?></td>
                     <td><?= $exam["cutoff_marks"] ?></td>
                     <td><?= $exam["status"] ?></td>
+                    <td><a onclick="generateRank('<?= $exam["admission_exam_id"] ?>')">Generate Ranks</a></td>
                 </tr>
             <?php } ?>
         </tbody>
@@ -192,7 +193,7 @@ if ($os->get('wt_admission_exams_save') == 'OK' && $os->post("wt_admission_exams
         $marks = $os->val($subject, "marks");
         $priority = $os->val($subject, "priority");
 
-        if($subject_name == "" || $marks == "") {
+        if ($subject_name == "" || $marks == "") {
             continue;
         }
 
@@ -206,5 +207,86 @@ if ($os->get('wt_admission_exams_save') == 'OK' && $os->post("wt_admission_exams
     }
 
     print "OK";
+}
+
+if ($os->get("generate_rank") == "OK" && $os->post("generate_rank") == "OK") {
+    $admission_exam_id = $os->post("admission_exam_id");
+    $admission_exam_details = $os->mq("SELECT * FROM admission_exam_detail WHERE admission_exam_id='$admission_exam_id' ORDER BY priority")->fetchAll(\PDO::FETCH_ASSOC);
+    $admission_exam_detail_ids = implode("','", array_map(function ($admission_exam_detail) {
+        return $admission_exam_detail["admission_exam_detail_id"];
+    }, $admission_exam_details));
+    $sql = <<<EOT
+        SELECT ff.name, ff.formfillup_id,aerd.admission_exam_result_id,  GROUP_CONCAT(JSON_OBJECT(
+            'priority', aed.priority,
+            'subject', aed.subject_name,
+            'obtain_marks', aerd.marks_obtain
+        )) as details, SUM(aerd.marks_obtain) as total_marks_obtain FROM admission_exam_result_detail aerd   
+        INNER JOIN formfillup ff ON ff.formfillup_id=aerd.formfillup_id 
+        INNER JOIN admission_exam_detail aed ON aerd.admission_exam_detail_id = aed.admission_exam_detail_id 
+        WHERE aed.admission_exam_detail_id IN('$admission_exam_detail_ids')
+        GROUP BY ff.formfillup_id 
+        ORDER BY total_marks_obtain DESC 
+EOT;
+    $results = $os->mq($sql)->fetchAll(\PDO::FETCH_ASSOC);
+    $results = array_map(function ($result) {
+        $details = json_decode("[" . $result["details"] . "]");
+        usort($details, function ($a, $b) {
+            return $a->priority - $b->priority;
+        });
+        $result["details"] = $details;
+        return $result;
+    }, $results);
+
+    usort($results, function ($ar, $br) {
+        if ($ar["total_marks_obtain"] == $br["total_marks_obtain"]) {
+            $ac = 0;
+            $bc = 0;
+            foreach ($ar["details"] as $i => $ard) {
+                $brd = $ar["details"][$i];
+                if ($ard->obtain_marks > $brd->obtain_marks) {
+                    $ac++;
+                } else {
+                    $bc++;
+                }
+            }
+            return $ac - $bc;
+        }
+        $ar["total_marks_obtain"] - $br["total_marks_obtain"];
+    });
+    foreach ($results as $index => $result) {
+        _d($result);
+        $dataToSave = [
+            "position" => $index + 1
+        ];
+        try {
+            $os->save("admission_exam_result", $dataToSave, "admission_exam_result_id", $result["admission_exam_result_id"]);
+        } catch (Exception $err) {
+        }
+        print $os->query;
+    }
+?>
+    <table class="table">
+        <? foreach ($results as $index => $result) { ?>
+            <tr>
+                <td><?= $index + 1 ?></td>
+                <td><?= $result["name"] ?></td>
+                <td><?= $result["total_marks_obtain"] ?></td>
+                <td>
+                    <table>
+                        <? foreach ($result["details"] as $detail) { ?>
+                            <tr>
+                                <td style="font-size: 10px; padding-right: 10px"><?= $detail->subject ?></td>
+                                <td style="font-size: 10px;"><?= $detail->obtain_marks ?></td>
+                            </tr>
+                        <? } ?>
+                    </table>
+                </td>
+
+            </tr>
+        <?
+        }
+        ?>
+    </table>
+<?
 }
 ?>

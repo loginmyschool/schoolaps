@@ -84,5 +84,17 @@ $loadingImage = $site['url-wtos'] . 'images/loadingwt.gif';
             admission_exam_form_modal.hide();
         }, url, fd);
     }
+
+    function generateRank(admission_exam_id) {
+        const fd = new FormData();
+        fd.append('generate_rank', "OK");
+        fd.append('admission_exam_id', admission_exam_id);
+        const url = '<? echo $ajaxFilePath ?>?generate_rank=OK&';
+        os.animateMe.div = 'div_busy';
+        os.animateMe.html = '<div class="loadImage"><img  src="<? echo $loadingImage ?>"  /> <div class="loadText">&nbsp;Please wait. Working...</div></div>';
+        os.setAjaxFunc((result) => {
+            alert("Successful");
+        }, url, fd);
+    }
 </script>
 <? include($site['root-wtos'] . 'bottom.php'); ?>
