@@ -76,9 +76,9 @@ global $os, $site, $session_selected, $bridge, $pageVar;
                         <td>
                             <?
                             if ($exam_result["total_marks_obtain"] >= $exam_result["cutoff_marks"] && $exam_result["position"] <= $exam_result["available_slots"]) {
-                                echo "Passed";
+                                echo "<span class='uk-text-success'>Passed</span>";
                             } else {
-                                echo "Failed";
+                                echo "<span class='uk-text-danger'>Failed</span>";
                             }
                             ?>
                         </td>

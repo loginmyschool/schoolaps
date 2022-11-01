@@ -182,7 +182,8 @@ if ($os->get('wt_admission_exams_save') == 'OK' && $os->post("wt_admission_exams
         "class" => $os->post("class"),
         "total_marks" => $os->post("total_marks"),
         "cutoff_marks" => $os->post("cutoff_marks"),
-        "available_slots" => $os->post("available_slots")
+        "available_slots" => $os->post("available_slots"),
+        "status" => $os->post("status")
     ];
 
     $admission_exam_id = $os->save("admission_exam", $dataToSave, "admission_exam_id", $admission_exam_id);
