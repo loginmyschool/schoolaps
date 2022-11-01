@@ -13,11 +13,12 @@ global $os, $site, $session_selected, $bridge, $pageVar;
     <div>
             <input class="uk-input uk-form-small" placeholder="Form Number" name="form_no" value="<?= $os->post('form_no'); ?>" />
         </div>
+        <div>OR</div>
         <div>
             <input class="uk-input uk-form-small" placeholder="Father Mobile" name="father_mobile" value="<?= $os->post('father_mobile'); ?>" />
         </div>
         <div>
-            <input class="uk-input uk-form-small" type="date" placeholder="Date of birth" name="dob" value="<?= $os->post("dob") ?>" />
+            <input required class="uk-input uk-form-small" type="date" placeholder="Date of birth" name="dob" value="<?= $os->post("dob") ?>" />
         </div>
         <div>
             <button class="uk-button uk-button-small uk-button-primary" type="submit">Search</button>
