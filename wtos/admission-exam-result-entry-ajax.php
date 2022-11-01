@@ -12,8 +12,8 @@ if ($os->get("fetch_students") == "OK" && $os->post("fetch_students")) {
     $admission_exam_detail = $os->mfa($os->mq("SELECT * FROM admission_exam_detail WHERE admission_exam_detail_id='" . $admission_exam_detail_id . "'"));
 
     $students = $os->mq("SELECT ff.name, ff.formfillup_id, aerd.marks_obtain  FROM formfillup ff " .
-        "LEFT JOIN admission_exam_result aer ON  aer.formfillup_id = ff.formfillup_id " .
-        "LEFT JOIN admission_exam_result_detail aerd ON  aerd.admission_exam_result_id=aer.admission_exam_result_id " .
+        "LEFT JOIN admission_exam_result aer ON  aer.formfillup_id = ff.formfillup_id AND aer.admission_exam_id='". $admission_exam_id ."'".
+        "LEFT JOIN admission_exam_result_detail aerd ON  aerd.admission_exam_result_id=aer.admission_exam_result_id AND aerd.admission_exam_detail_id='". $admission_exam_detail_id ."'".
         "WHERE ff.academic_year=' " . $admission_exam["session"] . "' AND ff.class_id='" . $admission_exam["class"] . "'");
 ?>
 
