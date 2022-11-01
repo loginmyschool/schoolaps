@@ -10,8 +10,11 @@ global $os, $site, $session_selected, $bridge, $pageVar;
 ?>
 <div class="uk-container uk-margin uk-container-small">
     <form method="post" class="uk-grid-small" uk-grid>
-        <div>
+    <div>
             <input class="uk-input uk-form-small" placeholder="Form Number" name="form_no" value="<?= $os->post('form_no'); ?>" />
+        </div>
+        <div>
+            <input class="uk-input uk-form-small" placeholder="Father Mobile" name="father_mobile" value="<?= $os->post('father_mobile'); ?>" />
         </div>
         <div>
             <input class="uk-input uk-form-small" type="date" placeholder="Date of birth" name="dob" value="<?= $os->post("dob") ?>" />
@@ -23,11 +26,12 @@ global $os, $site, $session_selected, $bridge, $pageVar;
     <div style="min-height: 200px" class="uk-margin">
         <? if ($os->post("form_no") != "") {
             $form_no = $os->post("form_no");
+            $father_mobile = $os->post("father_mobile");
             $dob = $os->post("dob");
             $sql = <<<EOT
                 SELECT * FROM admission_exam_result aed
                 INNER JOIN admission_exam ae ON ae.admission_exam_id=aed.admission_exam_id
-                INNER JOIN formfillup ff ON ff.formfillup_id= aed.formfillup_id AND ff.form_no='$form_no' AND DATE(ff.dob)='$dob'
+                INNER JOIN formfillup ff ON ff.formfillup_id= aed.formfillup_id AND (ff.form_no='$form_no' OR ff.father_mobile='$father_mobile') AND DATE(ff.dob)='$dob'
                 EOT;
             $exam_result = $os->mfa($os->mq($sql));
             if ($exam_result) {
@@ -103,7 +107,7 @@ global $os, $site, $session_selected, $bridge, $pageVar;
             <?
             }
         } else { ?>
-            <p>Please enter form number.</p>
+            <p>Please enter details above.</p>
 
         <? } ?>
     </div>
