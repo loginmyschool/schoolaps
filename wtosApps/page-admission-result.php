@@ -30,7 +30,7 @@ global $os, $site, $session_selected, $bridge, $pageVar;
             $dob = $os->post("dob");
             $sql = <<<EOT
                 SELECT * FROM admission_exam_result aed
-                INNER JOIN admission_exam ae ON ae.admission_exam_id=aed.admission_exam_id
+                INNER JOIN admission_exam ae ON ae.admission_exam_id=aed.admission_exam_id AND ae.status='PUBLISHED'
                 INNER JOIN formfillup ff ON ff.formfillup_id= aed.formfillup_id AND (ff.form_no='$form_no' OR ff.father_mobile='$father_mobile') AND DATE(ff.dob)='$dob'
                 EOT;
             $exam_result = $os->mfa($os->mq($sql));
