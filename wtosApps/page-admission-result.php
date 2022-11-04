@@ -8,9 +8,10 @@ global $os, $site, $session_selected, $bridge, $pageVar;
 <?
 
 ?>
+<div style="height: 40px"></div>
 <div class="uk-container uk-margin uk-container-small">
     <form method="post" class="uk-grid-small" uk-grid>
-    <div>
+        <div>
             <input class="uk-input uk-form-small" placeholder="Form Number" name="form_no" value="<?= $os->post('form_no'); ?>" />
         </div>
         <div>OR</div>
