@@ -11,26 +11,32 @@ if ($os->get("fetch_students") == "OK" && $os->post("fetch_students")) {
     $admission_exam = $os->mfa($os->mq("SELECT * FROM admission_exam WHERE admission_exam_id='" . $admission_exam_id . "'"));
     $admission_exam_detail = $os->mfa($os->mq("SELECT * FROM admission_exam_detail WHERE admission_exam_detail_id='" . $admission_exam_detail_id . "'"));
 
-    $students = $os->mq("SELECT ff.name, ff.formfillup_id, aerd.marks_obtain  FROM formfillup ff " .
-        "LEFT JOIN admission_exam_result aer ON  aer.formfillup_id = ff.formfillup_id AND aer.admission_exam_id='". $admission_exam_id ."'".
-        "LEFT JOIN admission_exam_result_detail aerd ON  aerd.admission_exam_result_id=aer.admission_exam_result_id AND aerd.admission_exam_detail_id='". $admission_exam_detail_id ."'".
-        "WHERE ff.academic_year=' " . $admission_exam["session"] . "' AND ff.class_id='" . $admission_exam["class"] . "'");
+    $students = $os->mq("SELECT ff.name, ff.form_no, ff.formfillup_id, aerd.marks_obtain  FROM formfillup ff " .
+        "LEFT JOIN admission_exam_result aer ON  aer.formfillup_id = ff.formfillup_id AND aer.admission_exam_id='" . $admission_exam_id . "'" .
+        "LEFT JOIN admission_exam_result_detail aerd ON  aerd.admission_exam_result_id=aer.admission_exam_result_id AND aerd.admission_exam_detail_id='" . $admission_exam_detail_id . "'" .
+        "WHERE ff.academic_year=' " . $admission_exam["session"] . "' AND ff.class_id='" . $admission_exam["class"] . "' ORDER BY ff.form_no");
 ?>
 
     <table class="uk-table uk-table-divider congested-table uk-table-striped">
         <tr>
+        <td width="1%" class="uk-text-nowrap">Form No</td>
             <td>Name</td>
+          
             <td width="1%">Marks</td>
         </tr>
         <?php
         while ($student = $os->mfa($students)) {
         ?>
             <tr>
+            <td>
+                    <?= $student["form_no"] ?>
+                </td>
                 <td>
                     <?= $student["name"] ?>
                 </td>
+              
                 <td>
-                    <input class="congested-form" type="number" max="<?= $admission_exam_detail["marks"]?>" onchange="saveMarks(event, <?= $student["formfillup_id"] ?>, event.target.value)" value="<?= $student["marks_obtain"] ?>" />
+                    <input class="congested-form" type="number" max="<?= $admission_exam_detail["marks"] ?>" onchange="saveMarks(event, <?= $student["formfillup_id"] ?>, event.target.value)" value="<?= $student["marks_obtain"] ?>" />
                 </td>
             </tr>
         <?php
