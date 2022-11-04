@@ -212,6 +212,7 @@ if ($os->get('wt_admission_exams_save') == 'OK' && $os->post("wt_admission_exams
 
 if ($os->get("generate_rank") == "OK" && $os->post("generate_rank") == "OK") {
     $admission_exam_id = $os->post("admission_exam_id");
+    $admission_exam = $os->mfa($os->mq("SELECT * FROM admission_exam WHERE admission_exam_id='$admission_exam_id'"));
     $admission_exam_details = $os->mq("SELECT * FROM admission_exam_detail WHERE admission_exam_id='$admission_exam_id' ORDER BY priority")->fetchAll(\PDO::FETCH_ASSOC);
     $admission_exam_detail_ids = implode("','", array_map(function ($admission_exam_detail) {
         return $admission_exam_detail["admission_exam_detail_id"];
@@ -255,15 +256,30 @@ EOT;
         $ar["total_marks_obtain"] - $br["total_marks_obtain"];
     });
     foreach ($results as $index => $result) {
-        _d($result);
-        $dataToSave = [
-            "position" => $index + 1
-        ];
+
         try {
+            $dataToSave = [
+                "position" => $index + 1
+            ];
             $os->save("admission_exam_result", $dataToSave, "admission_exam_result_id", $result["admission_exam_result_id"]);
         } catch (Exception $err) {
+            print $os->query;
         }
-        print $os->query;
+
+        if ($admission_exam["cutoff_marks"] > $result["total_marks_obtain"] || $admission_exam["available_slots"] < $index + 1) {
+            continue;
+        }
+        //save to forms
+        try {
+            $dataToSave = [
+                "form_status" => "passed",
+                "form_status_dated" => $os->now(),
+                "form_status_by"=> $os->loggedUser()["adminId"]
+            ];
+            $os->save("formfillup", $dataToSave, "formfillup_id", $result["formfillup_id"]);
+        } catch (Exception $err) {
+            print $os->query;
+        }
     }
 ?>
     <table class="table">
